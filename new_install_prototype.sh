@@ -5,7 +5,7 @@
 # DVSwitch Server, Supermon 7.4+ Fresh Install and Upgradeable Install, Basic Calculator and Plocate. 
 # Basic Calulator and Plocate will prepare your node for the Top of The Hour Time and Weather Announcement.
 
-# This fiel created by Freddie Mac - KD5FMU with the help of ChatGPT
+# This file created by Freddie Mac - KD5FMU with the help of ChatGPT
 
 # Install plocate
 cd ~
