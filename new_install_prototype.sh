@@ -108,6 +108,7 @@ sudo sed -i '/\[functions\]/a \
 849 = cmd,/usr/local/bin/SkywarnPlus/SkyDescribe.py 9 ; SkyDescribe the 9th alert' /etc/asterisk/rpt.conf
 echo "SkyDescribe DTMF commands added to rpt.conf."
 
+
 # Path to the rpt.conf file
 CONF_FILE="/etc/asterisk/rpt.conf"
 
