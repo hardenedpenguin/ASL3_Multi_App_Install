@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This Script file was created to assist with ta new install of AllStarLink version 3. 
+# This Script file was created to assist with a new install of AllStarLink version 3. 
 # Once you have applied your node setup you can run this file to Install SkywarnPlus, Apache2, AllScan Dashboard
 # DVSwitch Server, Supermon 7.4+ Fresh Install and Upgradeable Install, Basic Calculator and Plocate. 
 # Basic Calulator and Plocate will prepare your node for the Top of The Hour Time and Weather Announcement.
