@@ -14,22 +14,24 @@ sudo apt install plocate
 echo "plocate installed...."
 
 # Removing old Symbolic Link and Creating the new on
-sudo rm /usr/bin/locate
+sudo rm -f -s /usr/bin/plocate /usr/bin/locate
 sudo ln -s /usr/bin/plocate /usr/bin/locate
 sudo updatedb
 
-# Install Apache2 for DVSwitch
-echo "Apache2 for DVSwitch..."
+# Install package dependencies for DVSwitch
+echo "Package Depend for DVSwitch..."
 sudo apt install php-cgi libapache2-mod-php8.2
 echo "Apache2 for DVSwitch Installed..."
 
 # Install SkywarnPlus
 echo "Installing SkywarnPlus..."
+cd ~
 sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Mason10198/SkywarnPlus/main/swp-install)"
 echo "SkywarnPlus installed."
 
 # Install the AllScan dashboard
 echo "Installing AllScan..."
+cd ~
 sudo wget 'https://raw.githubusercontent.com/davidgsd/AllScan/main/AllScanInstallUpdate.php'
 sudo chmod 755 AllScanInstallUpdate.php
 sudo ./AllScanInstallUpdate.php
@@ -51,7 +53,7 @@ cd /usr/local/sbin
 sudo wget "http://2577.asnode.org:43856/supermonASL_fresh_install" -O supermonASL_fresh_install
 sudo chmod +x supermonASL_fresh_install
 hash
-sudo supermonASL_fresh_install
+sudo ./supermonASL_fresh_install
 echo "Supermon 7.4 installed."
 
 # Install Supermon 7.4 Upgradeable
@@ -60,12 +62,11 @@ cd /usr/local/sbin
 sudo wget "http://2577.asnode.org:43856/supermonASL_latest_update" -O supermonASL_latest_update
 sudo chmod +x supermonASL_latest_update
 hash
-sudo supermonASL_latest_update
+sudo ./supermonASL_latest_update
 echo "Upgradeable Supermon 7.4 installed."
 
 # Install Basic Calculator
 echo "Installing Basic Calculator..."
-cd ~
 sudo apt install bc
 echo "Basic Calculator installed."
 
