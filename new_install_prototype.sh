@@ -14,7 +14,7 @@ sudo apt install plocate
 echo "plocate installed...."
 
 # Removing old Symbolic Link and Creating the new on
-sudo rm -f -s /usr/bin/plocate /usr/bin/locate
+sudo rm /usr/bin/plocate
 sudo ln -s /usr/bin/plocate /usr/bin/locate
 sudo updatedb
 
