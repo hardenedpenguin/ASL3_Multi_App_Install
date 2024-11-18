@@ -9,9 +9,9 @@
 
 # Install plocate
 cd ~
-echo "Installing plocate..."
-sudo apt install plocate
-echo "plocate installed...."
+# echo "Installing plocate..."
+# sudo apt install plocate
+# echo "plocate installed...."
 
 # Removing old Symbolic Link and Creating the new on
 # sudo rm /usr/bin/plocate
