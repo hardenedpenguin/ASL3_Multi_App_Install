@@ -66,9 +66,9 @@ sudo ./supermonASL_latest_update
 echo "Upgradeable Supermon 7.4 installed."
 
 # Install Basic Calculator
-echo "Installing Basic Calculator..."
-sudo apt install bc
-echo "Basic Calculator installed."
+# echo "Installing Basic Calculator..."
+# sudo apt install bc
+# echo "Basic Calculator installed."
 
 # Add line to rpt.conf
 echo "Updating rpt.conf..."
