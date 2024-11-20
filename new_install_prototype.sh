@@ -129,16 +129,16 @@ echo "Setting up cron job..."
 echo "Cron job set."
 
 # Check if the line is already in the crontab
-CRON_LINE="00 00-23 * * * (/usr/bin/nice -19 ; /usr/bin/perl /usr/local/sbin/saytime.pl YOUR_ZIP YOUR_NODE > /dev/null)"
-(crontab -l 2>/dev/null | grep -Fx "$CRON_LINE") > /dev/null
+#CRON_LINE="00 00-23 * * * (/usr/bin/nice -19 ; /usr/bin/perl /usr/local/sbin/saytime.pl YOUR_ZIP YOUR_NODE > /dev/null)"
+#(crontab -l 2>/dev/null | grep -Fx "$CRON_LINE") > /dev/null
 
 # If the line is not in crontab, add it
-if [ $? -ne 0 ]; then
-    (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
-    echo "Cron job added successfully."
-else
-    echo "Cron job already exists."
-fi
+#if [ $? -ne 0 ]; then
+#    (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
+#    echo "Cron job added successfully."
+#else
+ #   echo "Cron job already exists."
+#fi
 
 
 echo "All installations and configurations are completed."
