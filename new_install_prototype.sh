@@ -137,7 +137,7 @@ echo "Cron job set."
 #    (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
 #    echo "Cron job added successfully."
 #else
- #   echo "Cron job already exists."
+#    echo "Cron job already exists."
 #fi
 
 
