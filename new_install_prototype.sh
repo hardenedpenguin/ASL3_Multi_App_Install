@@ -5,7 +5,20 @@
 # DVSwitch Server, Supermon 7.4+ Fresh Install and Upgradeable Install, Basic Calculator and Plocate. 
 # Basic Calulator and Plocate will prepare your node for the Top of The Hour Time and Weather Announcement.
 
-# This file created by Freddie Mac - KD5FMU with the help of ChatGPT
+# This file created by Freddie Mac - KD5FMU with the help of ChatGPT with help from Allan - WA3WCO
+
+#
+# check if root
+#
+SUDO=""
+if [[ $EUID != 0 ]]; then
+    SUDO="sudo"
+    SUDO_EUID=$(${SUDO} id -u)
+    if [[ ${SUDO_EUID} -ne 0 ]]; then
+        echo "This script must be run as root or with sudo"
+        exit 1
+    fi
+fi
 
 # Install plocate
 cd ~
