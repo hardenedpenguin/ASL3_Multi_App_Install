@@ -20,17 +20,6 @@ if [[ $EUID != 0 ]]; then
     fi
 fi
 
-# Install plocate
-cd ~
-# echo "Installing plocate..."
-# sudo apt install plocate
-# echo "plocate installed...."
-
-# Removing old Symbolic Link and Creating the new on
-# sudo rm /usr/bin/plocate
-# sudo ln -s /usr/bin/plocate /usr/bin/locate
-# sudo updatedb
-
 # Install package dependencies for DVSwitch
 echo "Package Depend for DVSwitch..."
 sudo apt install php-cgi libapache2-mod-php8.2
@@ -78,10 +67,11 @@ hash
 sudo ./supermonASL_latest_update
 echo "Upgradeable Supermon 7.4 installed."
 
-# Install Basic Calculator
-# echo "Installing Basic Calculator..."
-# sudo apt install bc
-# echo "Basic Calculator installed."
+# Path to the rpt.conf file
+CONF_FILE="/etc/asterisk/rpt.conf"
+
+# Backup the original configuration file
+cp $CONF_FILE ${CONF_FILE}.bak
 
 # Add line to rpt.conf
 echo "Updating rpt.conf..."
@@ -120,13 +110,6 @@ sudo sed -i '/\[functions\]/a \
 848 = cmd,/usr/local/bin/SkywarnPlus/SkyDescribe.py 8 ; SkyDescribe the 8th alert\n\
 849 = cmd,/usr/local/bin/SkywarnPlus/SkyDescribe.py 9 ; SkyDescribe the 9th alert' /etc/asterisk/rpt.conf
 echo "SkyDescribe DTMF commands added to rpt.conf."
-
-
-# Path to the rpt.conf file
-CONF_FILE="/etc/asterisk/rpt.conf"
-
-# Backup the original configuration file
-cp $CONF_FILE ${CONF_FILE}.bak
 
 # Uncomment and change tailmessagetime and tailsquashedtime
 sed -i '/tailmessagetime=/s/^#//; s/tailmessagetime=.*/tailmessagetime=600000/' $CONF_FILE
