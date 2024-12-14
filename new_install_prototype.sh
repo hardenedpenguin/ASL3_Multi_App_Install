@@ -119,21 +119,22 @@ awk '/tailsquashedtime=30000/ { print "tailmessagelist = /tmp/SkywarnPlus/wx-tai
 echo "Modifications applied successfully."
 
 # Add cron job
+# echo "Setting up cron job..."
+# (sudo crontab -l 2>/dev/null; echo "0 3 * * * /var/www/html/supermon/astdb.php cron") | sudo crontab -
+# echo "Cron job set."
+
+# Define the cron job and its preceding comment
 echo "Setting up cron job..."
-(sudo crontab -l 2>/dev/null; echo "0 3 * * * /var/www/html/supermon/astdb.php cron") | sudo crontab -
-echo "Cron job set."
+CRON_COMMENT="# Supermon 7.4 updater crontab entry"
+CRON_JOB="0 3 * * * /var/www/html/supermon/astdb.php cron"
 
-# Check if the line is already in the crontab
-#CRON_LINE="00 00-23 * * * (/usr/bin/nice -19 ; /usr/bin/perl /usr/local/sbin/saytime.pl YOUR_ZIP YOUR_NODE > /dev/null)"
-#(crontab -l 2>/dev/null | grep -Fx "$CRON_LINE") > /dev/null
+# Add the cron job and comment to the root user's crontab
+(sudo crontab -l 2>/dev/null; echo "$CRON_COMMENT"; echo "$CRON_JOB") | sudo crontab -
 
-# If the line is not in crontab, add it
-#if [ $? -ne 0 ]; then
-#    (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
-#    echo "Cron job added successfully."
-#else
-#    echo "Cron job already exists."
-#fi
+# Print the current crontab to verify
+echo "Current crontab for root:"
+sudo crontab -l
+
 
 
 echo "All installations and configurations are completed."
