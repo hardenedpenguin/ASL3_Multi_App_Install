@@ -6,7 +6,7 @@ This assmues that you want to install, SkywarnPlus, DVSwitch Server, AllScan and
 Many different tweaks and flavors are forthcoming.
 
 
-Once you have done a basic setup of the new ASL 3 node install you can now safely download and run. Go to the root directory by executing the following command:
+Once you have done a basic setup of the new ASL 3 node install you can now safely download and run the before mentioned script file. Go to the root directory by executing the following command:
 
 ```
 cd ~
