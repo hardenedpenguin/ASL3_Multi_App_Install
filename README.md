@@ -30,11 +30,11 @@ Then once that is down you can go ahead and run the script file with this comman
 sudo ./m_app.sh
 ```
 
-This will take a little while to install but you will encounter some prompts for information. Please answer them as you see needed but most of them, if not all, will most likely be a yes answer. But if you are a more advanced user then you can make whatever choice you wish.
+This will take a little while to install and you will encounter some prompts for information. Please answer them as you see needed but most of them, if not all, will most likely be a yes answer. But if you are a more advanced user then you can make whatever choice you wish.
 
 This script will install AllScan, DVSwitch Server, SkywarnPlus and Supermon 7.4+ 
 
-It is my wish that you find this cript file useful.
+It is my wish that you find this script file useful.
 
 73 DE KD5FMU
 
