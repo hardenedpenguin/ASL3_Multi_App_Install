@@ -1,7 +1,7 @@
 ![MAPI Logo](https://github.com/KD5FMU/ASL3_Multi_App_Install/blob/main/MAIS.png)
 
-# ASL3_Multi_App_Install
-This is a script file that will help install AllScan, DvSwitch Server, SkywarnPlus, Supermon 7.4 Fresh Install and the Upgradable Version.
+# AllStarLink Multiple Application Install Script
+This is a script file that will help install AllScan, DvSwitch Server, SkywarnPlus, Supermon 7.4 Fresh Install and the Upgradable Version. I mostly utilize this script to install these Apps once I setup a new ASL3 Install.
 
 This assmues that you want to install, SkywarnPlus, DVSwitch Server, AllScan and Supermon 7.4+ Upgrade verison onto your AllStarLink version 3 node. As of this date (11/08/2024) This has only been tested on the Raspberry Pi Appliance version of ASL 3.
 
