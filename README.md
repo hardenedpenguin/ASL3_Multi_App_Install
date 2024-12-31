@@ -1,3 +1,5 @@
+![MAPI Logo](https://github.com/KD5FMU/ASL3_Multi_App_Install/blob/main/MAIS.png)
+
 # ASL3_Multi_App_Install
 This is a script file that will help install AllScan, DvSwitch Server, SkywarnPlus, Supermon 7.4 Fresh Install and the Upgradable Version.
 
