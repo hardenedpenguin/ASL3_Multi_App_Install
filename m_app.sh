@@ -118,6 +118,11 @@ sed -i '/tailsquashedtime=/s/^#//; s/tailsquashedtime=.*/tailsquashedtime=30000/
 awk '/tailsquashedtime=30000/ { print "tailmessagelist = /tmp/SkywarnPlus/wx-tail"; } { print }' $CONF_FILE > ${CONF_FILE}.tmp && mv ${CONF_FILE}.tmp $CONF_FILE
 echo "Modifications applied successfully."
 
+# Must allow apache2 to access /tmp for info to be displayed properly on dvswitch dashboard
+sudo cp /lib/systemd/system/apache2.service /etc/systemd/system/
+sudo sed -i 's/true/false/g' /etc/systemd/system/apache2.service
+sudo systemctl restart apache2
+
 # Add cron job
 # echo "Setting up cron job..."
 # (sudo crontab -l 2>/dev/null; echo "0 3 * * * /var/www/html/supermon/astdb.php cron") | sudo crontab -
