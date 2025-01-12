@@ -123,10 +123,12 @@ install_dvswitch() {
 	echo "Installing dvswitch..."
 	# Install deps before we install dvswitch
 	apt install -y php-cgi libapache2-mod-php8.2
-	cd /tmp || exit
+	cd || exit
 	wget dvswitch.org/bookworm
 	chmod +x bookworm
 	./bookworm
+	# Cleanup file from /root
+	rm /root/bookworm
 	apt update
 	apt install -y dvswitch-server
 
