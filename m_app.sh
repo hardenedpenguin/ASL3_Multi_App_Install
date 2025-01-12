@@ -137,7 +137,8 @@ install_dvswitch() {
 	cp /lib/systemd/system/apache2.service /etc/systemd/system/
 	sed -i 's/true/false/g' /etc/systemd/system/apache2.service
 	systemctl restart apache2
-	
+	systemctl daemon-restart
+
 	echo "Dvswitch Server installation complete."
 }
 
