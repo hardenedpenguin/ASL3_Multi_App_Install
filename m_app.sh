@@ -50,10 +50,11 @@ install_allscan() {
 	echo "Installing allscan..."
 	# First make sure required deps are installed
 	apt install php unzip -y
-	cd /tmp || exit
+	cd || exit
 	wget 'https://raw.githubusercontent.com/davidgsd/AllScan/main/AllScanInstallUpdate.php'
 	chmod 755 AllScanInstallUpdate.php
 	./AllScanInstallUpdate.php
+	rm -f AllScanInstallUpdate.php
 	echo "Allscan installation complete."
 }
 
@@ -61,7 +62,7 @@ install_supermon() {
 	echo "Installing supermon..."
 	# Install deps before we fetch script and run
 	apt -y install apache2 php libapache2-mod-php libcgi-session-perl bc
-	cd /tmp || exit
+	cd || exit
 	wget "http://2577.asnode.org:43856/supermonASL_fresh_install" -O supermonASL_fresh_install
 	chmod +x supermonASL_fresh_install
 	./supermonASL_fresh_install
@@ -71,6 +72,7 @@ install_supermon() {
 	wget "http://2577.asnode.org:43856/supermonASL_latest_update" -O supermonASL_latest_update
 	chmod +x supermonASL_latest_update
 	./supermonASL_latest_update
+	rm -f supermonASL_fresh_install supermonASL_latest_update
 
 	cp "$CONF_FILE" "${CONF_FILE}.bak-supermon"
 	sed -i '/\[functions\]/a SMUPDATE=cmd,/usr/local/sbin/supermonASL_latest_update' "$CONF_FILE"
@@ -88,7 +90,7 @@ install_skywarnplus() {
 	echo "Installing skywarnplus..."
 	# Install deps before we install skywarn via script
 	apt install -y unzip python3 python3-pip ffmpeg python3-ruamel.yaml python3-requests python3-dateutil python3-pydub
-	cd /tmp || exit
+	cd || exit
 	bash -c "$(curl -fsSL https://raw.githubusercontent.com/Mason10198/SkywarnPlus/main/swp-install)"
 
 	cp "$CONF_FILE" "${CONF_FILE}.bak-skywarn"
@@ -127,8 +129,7 @@ install_dvswitch() {
 	wget dvswitch.org/bookworm
 	chmod +x bookworm
 	./bookworm
-	# Cleanup file from /root
-	rm /root/bookworm
+	rm bookworm
 	apt update
 	apt install -y dvswitch-server
 
