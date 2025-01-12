@@ -75,7 +75,7 @@ install_supermon() {
 	rm -f supermonASL_fresh_install supermonASL_latest_update
 
 	cp "$CONF_FILE" "${CONF_FILE}.bak-supermon"
-	sed -i '/\[functions\]/a SMUPDATE=cmd,/usr/local/sbin/supermonASL_latest_update' "$CONF_FILE"
+	sed -i '/\[functions\]/a SMUPDATE=cmd,/usr/local/sbin/supermonASL_latest_update \n' "$CONF_FILE"
 
 	echo "Setting up cron job..."
 	CRON_COMMENT="# Supermon 7.4 updater crontab entry"
@@ -112,7 +112,7 @@ install_skywarnplus() {
 846 = cmd,/usr/local/bin/SkywarnPlus/SkyDescribe.py 6 ; SkyDescribe the 6th alert \
 847 = cmd,/usr/local/bin/SkywarnPlus/SkyDescribe.py 7 ; SkyDescribe the 7th alert \
 848 = cmd,/usr/local/bin/SkywarnPlus/SkyDescribe.py 8 ; SkyDescribe the 8th alert \
-849 = cmd,/usr/local/bin/SkywarnPlus/SkyDescribe.py 9 ; SkyDescribe the 9th alert' "$CONF_FILE"
+849 = cmd,/usr/local/bin/SkywarnPlus/SkyDescribe.py 9 ; SkyDescribe the 9th alert \n' "$CONF_FILE"
 
 	sed -i '/tailmessagetime=/s/^#//; s/tailmessagetime=.*/tailmessagetime=600000/' "$CONF_FILE"
 	sed -i '/tailsquashedtime=/s/^#//; s/tailsquashedtime=.*/tailsquashedtime=30000/' "$CONF_FILE"
