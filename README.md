@@ -44,7 +44,6 @@ Then once that is down you can go ahead and run the script file with this comman
 
 ```
 sudo ./m_app.sh -aswd
-
 ```
 
 This will take a little while to install and you will encounter some prompts for information. Please answer them as you see needed but most of them, if not all, will most likely be a yes answer. But if you are a more advanced user then you can make whatever choice you wish.
