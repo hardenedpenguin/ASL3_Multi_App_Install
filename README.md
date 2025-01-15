@@ -12,7 +12,7 @@ This has also been tested on Debian 12 versions.
 Once you have done a basic setup of the new ASL 3 node install you can now safely download and run the before mentioned script file. Go to the root directory by executing the following command:
 
 ```
-cd
+cd ~
 ```
 
 Then we can download the script file with this command:
