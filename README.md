@@ -28,7 +28,7 @@ chmod +x m_app.sh
 ```
 You now have options that can be passed to the script to install the applications that you desire.
 ```
-Usage: ./m-app.sh [OPTIONS]
+Usage: ./m_app.sh [OPTIONS]
 
 Options:
   -a    Install allscan
