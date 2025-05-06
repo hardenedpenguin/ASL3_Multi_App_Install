@@ -147,10 +147,11 @@ install_dvswitch() {
 		sed -i 's/true/false/g' /etc/systemd/system/apache2.service
 		systemctl daemon-reload
 		systemctl restart apache2
-		# Ensure we use the default usrp port used by asterisk
-		sed -i 's/31001/34001/' /usr/share/dvswitch/include/config.php
 	fi
-
+	
+	# Ensure we use the default usrp port used by asterisk
+	sed -i 's/31001/34001/' /usr/share/dvswitch/include/config.php
+	
 	echo "Dvswitch Server installation complete."
 }
 
