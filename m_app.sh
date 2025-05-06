@@ -133,13 +133,25 @@ install_dvswitch() {
 	rm bookworm
 	apt update
 	apt install -y dvswitch-server
-
-	# Allow Apache2 to access /tmp
-	cp /lib/systemd/system/apache2.service /etc/systemd/system/
-	sed -i 's/true/false/g' /etc/systemd/system/apache2.service
-	systemctl restart apache2
-	systemctl daemon-reload
-
+	
+	# Check for the directory before we proceed with new update from upstream
+	if [ ! -d /usr/share/dvswitch ]; then
+		# Update the dashboard
+		wget dvswitch.org/asl3_dvswitch_dashboard.run
+		chmod +x asl3_dvswitch_dashboard.run
+		./asl3_dvswitch_dashboard.run
+	
+		#Only update apache if we are actually updating dashboard
+		# Allow Apache2 to access /tmp
+		cp /lib/systemd/system/apache2.service /etc/systemd/system/
+		sed -i 's/true/false/g' /etc/systemd/system/apache2.service
+		systemctl daemon-reload
+		systemctl restart apache2
+	fi
+	
+	# Ensure we use the default usrp port used by asterisk
+	sed -i 's/31001/34001/' /usr/share/dvswitch/include/config.php
+	
 	echo "Dvswitch Server installation complete."
 }
 
