@@ -5,7 +5,7 @@
 #
 # Copyright (C) 2024 Freddie Mac - KD5FMU 
 # Copyright (C) 2024 Allan - OCW3AW
-# Copyright (C) 2024 Jory A. Pratt - W5GLE
+# Copyright (C) 2024-2025 Jory A. Pratt - W5GLE
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -97,7 +97,6 @@ install_supermon_ng() {
 	chmod +x supermon-ng-installer.sh
 	./supermon-ng-installer.sh
 	rm -f supermon-ng-installer.sh
-	
 	echo "Supermon-NG installation complete."
 }
 
