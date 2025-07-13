@@ -33,17 +33,18 @@ Usage: ./m_app.sh [OPTIONS]
 Options:
   -a    Install allscan
   -s    Install supermon
+  -n    Install supermon-ng
   -w    Install skywarnplus
   -d    Install dvswitch
   -h    Display this help message
 
-You can combine options to install multiple software (e.g., ./m_app.sh -a -s).
+You can combine options to install multiple software (e.g., ./m_app.sh -a -s -n).
 ```
 
 Then once that is down you can go ahead and run the script file with this command: This is an example please pick the applications you are wanting.
 
 ```
-sudo ./m_app.sh -aswd
+sudo ./m_app.sh -asnwd
 ```
 
 This will take a little while to install and you will encounter some prompts for information. Please answer them as you see needed but most of them, if not all, will most likely be a yes answer. But if you are a more advanced user then you can make whatever choice you wish.

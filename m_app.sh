@@ -5,7 +5,7 @@
 #
 # Copyright (C) 2024 Freddie Mac - KD5FMU 
 # Copyright (C) 2024 Allan - OCW3AW
-# Copyright (C) 2024 Jory A. Pratt - W5GLE
+# Copyright (C) 2024-2025 Jory A. Pratt - W5GLE
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -37,11 +37,12 @@ Usage: $0 [OPTIONS]
 Options:
   -a    Install allscan
   -s    Install supermon
+  -n    Install supermon-ng
   -w    Install skywarnplus
   -d    Install dvswitch
   -h    Display this help message
 
-You can combine options to install multiple software (e.g., $0 -a -s).
+You can combine options to install multiple software (e.g., $0 -a -s -n).
 EOF
 }
 
@@ -85,6 +86,18 @@ install_supermon() {
 	echo "Cron job set."
 
 	echo "Upgradeable Supermon 7.4 install complete."
+}
+
+install_supermon_ng() {
+	echo "Installing supermon-ng..."
+	# Install deps before we fetch script and run
+	apt install -y apache2 php libapache2-mod-php libcgi-session-perl bc acl curl tar coreutils sudo rsync
+	cd || exit
+	wget "https://raw.githubusercontent.com/hardenedpenguin/supermon-ng/refs/heads/main/supermon-ng-installer.sh" -O supermon-ng-installer.sh
+	chmod +x supermon-ng-installer.sh
+	./supermon-ng-installer.sh
+	rm -f supermon-ng-installer.sh
+	echo "Supermon-NG installation complete."
 }
 
 install_skywarnplus() {
@@ -141,7 +154,7 @@ install_dvswitch() {
 }
 
 # Parse command-line arguments
-while getopts "aswdh" opt; do
+while getopts "aswdnh" opt; do
 	case $opt in
 		a)
 			install_allscan_flag=true
@@ -154,6 +167,9 @@ while getopts "aswdh" opt; do
 		;;
 		d)
 			install_dvswitch_flag=true
+		;;
+		n)
+			install_supermon_ng_flag=true
 		;;
 		h)
 			usage
@@ -175,5 +191,6 @@ fi
 # Perform the installations based on flags
 [ "$install_allscan_flag" ] && install_allscan
 [ "$install_supermon_flag" ] && install_supermon
+[ "$install_supermon_ng_flag" ] && install_supermon_ng
 [ "$install_skywarnplus_flag" ] && install_skywarnplus
 [ "$install_dvswitch_flag" ] && install_dvswitch
