@@ -1,7 +1,7 @@
 ![MAPI Logo](https://github.com/KD5FMU/ASL3_Multi_App_Install/blob/main/MAIS.png)
 
 # AllStarLink Multiple Application Install Script
-This is an enhanced script file that will help install AllScan, DvSwitch Server, SkywarnPlus, Supermon 7.4 Fresh Install and the Upgradable Version. I mostly utilize this script to install these Apps once I setup a new ASL3 Install.
+This is an enhanced script file that will help install AllScan, DvSwitch Server, SkywarnPlus, and Supermon 7.4 Fresh Install and the Upgradable Version. I mostly utilize this script to install these Apps once I setup a new ASL3 Install.
 
 You now have the option to install SkywarnPlus, DVSwitch Server, AllScan and Supermon 7.4+ Upgrade version onto your AllStarLink version 3 node. As of this date (1/11/2025) This has been tested on the Raspberry Pi Appliance version of ASL 3.
 
@@ -55,14 +55,13 @@ Usage: ./m_app.sh [OPTIONS]
 Options:
   -a    Install allscan
   -s    Install supermon
-  -n    Install supermon-ng
   -w    Install skywarnplus
   -d    Install dvswitch
   -v    Verbose output
   -t    Dry run (test mode)
   -h    Display this help message
 
-You can combine options to install multiple software (e.g., ./m_app.sh -a -s -n).
+You can combine options to install multiple software (e.g., ./m_app.sh -a -s -w).
 ```
 
 ## 🔧 Examples
@@ -74,12 +73,12 @@ sudo ./m_app.sh -t -a -s -w
 
 **Verbose installation** - Get detailed output during installation:
 ```bash
-sudo ./m_app.sh -v -a -s -n -w -d
+sudo ./m_app.sh -v -a -s -w -d
 ```
 
 **Normal installation** - Install all applications:
 ```bash
-sudo ./m_app.sh -asnwd
+sudo ./m_app.sh -aswd
 ```
 
 **Install specific applications** - Choose only what you need:
@@ -94,7 +93,6 @@ This script will install:
 - **DVSwitch Server** - Digital Voice switching (requires PHP 8.2)
 - **SkywarnPlus** - Weather alert integration
 - **Supermon 7.4+** - Enhanced monitoring interface
-- **Supermon-NG** - Next generation monitoring (alternative to Supermon)
 
 ## 🔍 Logging & Troubleshooting
 

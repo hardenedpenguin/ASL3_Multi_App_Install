@@ -129,14 +129,13 @@ Usage: $0 [OPTIONS]
 Options:
   -a    Install allscan
   -s    Install supermon
-  -n    Install supermon-ng
   -w    Install skywarnplus
   -d    Install dvswitch
   -v    Verbose output
   -t    Dry run (test mode)
   -h    Display this help message
 
-You can combine options to install multiple software (e.g., $0 -a -s -n).
+You can combine options to install multiple software (e.g., $0 -a -s -w).
 EOF
 }
 
@@ -246,37 +245,6 @@ install_supermon() {
     log INFO "Supermon installation completed successfully"
 }
 
-install_supermon_ng() {
-    log INFO "Installing Supermon-NG..."
-    
-    if [ "$DRY_RUN" = true ]; then
-        log INFO "[DRY RUN] Would install Supermon-NG"
-        return 0
-    fi
-    
-    # Install dependencies
-    local deps=("apache2" "php" "libapache2-mod-php" "libcgi-session-perl" "bc" "acl" "curl" "tar" "coreutils" "sudo" "rsync")
-    for dep in "${deps[@]}"; do
-        if ! package_installed "$dep"; then
-            log INFO "Installing dependency: $dep"
-            apt install -y "$dep" || error_exit "Failed to install $dep"
-        fi
-    done
-    
-    cd "$TEMP_DIR" || error_exit "Failed to change to temp directory"
-    
-    safe_download "https://raw.githubusercontent.com/hardenedpenguin/supermon-ng/refs/heads/main/supermon-ng-installer.sh" "supermon-ng-installer.sh"
-    chmod +x supermon-ng-installer.sh
-    
-    log INFO "Running Supermon-NG installer..."
-    if ./supermon-ng-installer.sh; then
-        log INFO "Supermon-NG installation completed successfully"
-    else
-        error_exit "Supermon-NG installation failed"
-    fi
-    
-    rm -f supermon-ng-installer.sh
-}
 
 install_skywarnplus() {
     log INFO "Installing SkywarnPlus..."
@@ -406,7 +374,7 @@ install_dvswitch() {
 }
 
 # Parse command-line arguments
-while getopts "aswdnhtv" opt; do
+while getopts "aswdhtv" opt; do
     case $opt in
         a)
             install_allscan_flag=true
@@ -419,9 +387,6 @@ while getopts "aswdnhtv" opt; do
             ;;
         d)
             install_dvswitch_flag=true
-            ;;
-        n)
-            install_supermon_ng_flag=true
             ;;
         t)
             DRY_RUN=true
@@ -456,7 +421,6 @@ fi
 # Perform the installations based on flags
 [ "$install_allscan_flag" ] && install_allscan
 [ "$install_supermon_flag" ] && install_supermon
-[ "$install_supermon_ng_flag" ] && install_supermon_ng
 [ "$install_skywarnplus_flag" ] && install_skywarnplus
 [ "$install_dvswitch_flag" ] && install_dvswitch
 
