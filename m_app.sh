@@ -24,7 +24,7 @@
 # Configuration
 CONF_FILE="/etc/asterisk/rpt.conf"
 LOG_FILE="/var/log/m_app_install.log"
-TEMP_DIR="/tmp/m_app_install"
+TEMP_DIR="/root/m_app_install"
 DRY_RUN=false
 VERBOSE=false
 
