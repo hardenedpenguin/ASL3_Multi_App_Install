@@ -324,14 +324,7 @@ install_dvswitch() {
     fi
     
     # Install dependencies
-    local deps=("php-cgi" "libapache2-mod-php8.2")
-    
-    # Check if PHP 8.2 is available
-    if ! apt list --installed | grep -q "php8.2" && ! apt list --available | grep -q "php8.2"; then
-        log ERROR "PHP 8.2 is required for DVSwitch but not available in package repositories"
-        log INFO "Please ensure PHP 8.2 is available before installing DVSwitch"
-        return 1
-    fi
+    local deps=("php-cgi" "libapache2-mod-php")
     
     for dep in "${deps[@]}"; do
         if ! package_installed "$dep"; then
