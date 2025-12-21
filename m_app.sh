@@ -319,7 +319,7 @@ install_skywarnplus() {
     # Download and apply patch for Trixie compatibility
     log INFO "Downloading swp-install patch for Trixie compatibility..."
     local patch_file="swp-install-trixie.patch"
-    safe_download "https://anarchy.w5gle.us/swp-install-trixie.patch" "$patch_file"
+    safe_download "https://raw.githubusercontent.com/KD5FMU/ASL3_Multi_App_Install/refs/heads/main/swp-install-trixie.patch" "$patch_file"
     
     # Check if patch command is available
     if ! command_exists patch; then
