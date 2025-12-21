@@ -1,0 +1,24 @@
+diff --git a/swp-install b/swp-install
+index acd6234..52fcdad 100644
+--- a/swp-install
++++ b/swp-install
+@@ -111,7 +111,18 @@ install_dependencies() {
+             apt install -y unzip python3 python3-pip ffmpeg
+             pip3 install ruamel.yaml requests python-dateutil pydub
+         else
+-            apt install -y unzip python3 python3-pip ffmpeg python3-ruamel.yaml python3-requests python3-dateutil python3-pydub
++            # Check Debian version to determine if we need to install pydub via pip
++            # python3-pydub is not available in Debian 13 (Trixie) due to Python 3.13 compatibility
++            apt install -y unzip python3 python3-pip ffmpeg python3-ruamel.yaml python3-requests python3-dateutil
++            
++            # Try to install python3-pydub, if it fails (not available in Trixie), use pip instead
++            if apt install -y python3-pydub 2>/dev/null; then
++                echo "Installed python3-pydub from system packages"
++            else
++                echo "python3-pydub not available in system packages (likely Debian Trixie)"
++                echo "Installing pydub via pip (latest version works with Python 3.13)"
++                pip3 install --break-system-packages pydub
++            fi
+         fi
+     elif [ "$OS" = "arch" ]; then
+         pacman -Syu --noconfirm
