@@ -89,6 +89,29 @@ package_installed() {
     dpkg -l "$1" >/dev/null 2>&1
 }
 
+# Function to get Debian codename
+get_debian_codename() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        echo "$VERSION_CODENAME"
+    elif [ -f /etc/debian_version ]; then
+        local debian_version=$(cat /etc/debian_version)
+        case "$debian_version" in
+            12*)
+                echo "bookworm"
+                ;;
+            13*)
+                echo "trixie"
+                ;;
+            *)
+                echo "unknown"
+                ;;
+        esac
+    else
+        echo "unknown"
+    fi
+}
+
 # Function to safely download files
 safe_download() {
     local url="$1"
@@ -255,7 +278,7 @@ install_skywarnplus() {
     fi
     
     # Install dependencies
-    local deps=("unzip" "python3" "python3-pip" "ffmpeg" "python3-ruamel.yaml" "python3-requests" "python3-dateutil" "python3-pydub")
+    local deps=("unzip" "python3" "python3-pip" "ffmpeg" "python3-ruamel.yaml" "python3-requests" "python3-dateutil")
     for dep in "${deps[@]}"; do
         if ! package_installed "$dep"; then
             log INFO "Installing dependency: $dep"
@@ -263,14 +286,64 @@ install_skywarnplus() {
         fi
     done
     
+    # Install pydub - use pip3 on Trixie, apt on Bookworm
+    local debian_codename=$(get_debian_codename)
+    if [ "$debian_codename" = "trixie" ]; then
+        log INFO "Detected Debian Trixie - installing pydub via pip3"
+        if ! python3 -c "import pydub" 2>/dev/null; then
+            log INFO "Installing pydub via pip3"
+            pip3 install pydub || error_exit "Failed to install pydub via pip3"
+        else
+            log INFO "pydub is already installed"
+        fi
+    else
+        # Try apt install for Bookworm and other versions
+        if ! package_installed "python3-pydub"; then
+            log INFO "Installing dependency: python3-pydub"
+            if apt install -y python3-pydub 2>/dev/null; then
+                log INFO "Installed python3-pydub via apt"
+            else
+                log WARN "python3-pydub not available via apt, falling back to pip3"
+                pip3 install pydub || error_exit "Failed to install pydub via pip3"
+            fi
+        fi
+    fi
+    
     cd "$TEMP_DIR" || error_exit "Failed to change to temp directory"
     
+    # Download swp-install script
+    local installer="swp-install"
+    safe_download "https://raw.githubusercontent.com/Mason10198/SkywarnPlus/main/swp-install" "$installer"
+    chmod +x "$installer"
+    
+    # Download and apply patch for Trixie compatibility
+    log INFO "Downloading swp-install patch for Trixie compatibility..."
+    local patch_file="swp-install-trixie.patch"
+    safe_download "https://anarchy.w5gle.us/swp-install-trixie.patch" "$patch_file"
+    
+    # Check if patch command is available
+    if ! command_exists patch; then
+        log INFO "Installing patch utility..."
+        apt install -y patch || error_exit "Failed to install patch utility"
+    fi
+    
+    log INFO "Applying patch to swp-install..."
+    if patch "$installer" "$patch_file"; then
+        log INFO "Patch applied successfully"
+    else
+        log WARN "Patch application failed or patch already applied, continuing..."
+    fi
+    
+    rm -f "$patch_file"
+    
     log INFO "Running SkywarnPlus installer..."
-    if bash -c "$(curl -fsSL https://raw.githubusercontent.com/Mason10198/SkywarnPlus/main/swp-install)"; then
+    if ./"$installer"; then
         log INFO "SkywarnPlus installation completed"
     else
         error_exit "SkywarnPlus installation failed"
     fi
+    
+    rm -f "$installer"
     
     # Backup and modify configuration
     backup_config "skywarn"
@@ -324,14 +397,7 @@ install_dvswitch() {
     fi
     
     # Install dependencies
-    local deps=("php-cgi" "libapache2-mod-php8.2")
-    
-    # Check if PHP 8.2 is available
-    if ! apt list --installed | grep -q "php8.2" && ! apt list --available | grep -q "php8.2"; then
-        log ERROR "PHP 8.2 is required for DVSwitch but not available in package repositories"
-        log INFO "Please ensure PHP 8.2 is available before installing DVSwitch"
-        return 1
-    fi
+    local deps=("php-cgi" "libapache2-mod-php")
     
     for dep in "${deps[@]}"; do
         if ! package_installed "$dep"; then

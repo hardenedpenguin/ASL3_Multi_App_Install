@@ -23,7 +23,6 @@ The script has been significantly enhanced with:
 - AllStarLink version 3 installed and configured
 - Root or sudo access
 - Internet connection for downloads
-- For DVSwitch: PHP 8.2 must be available in your package repositories
 
 ## 🛠️ Installation
 
@@ -90,7 +89,7 @@ sudo ./m_app.sh -w -s  # Install only SkywarnPlus and Supermon
 
 This script will install:
 - **AllScan** - Dashboard for AllStarLink monitoring
-- **DVSwitch Server** - Digital Voice switching (requires PHP 8.2)
+- **DVSwitch Server** - Digital Voice switching (works with PHP 8.2+)
 - **SkywarnPlus** - Weather alert integration
 - **Supermon 7.4+** - Enhanced monitoring interface
 
@@ -103,7 +102,7 @@ This script will install:
 ## ⚠️ Important Notes
 
 - The script must be run as root or with sudo
-- DVSwitch requires PHP 8.2 specifically
+- DVSwitch works with PHP 8.2 (Debian Bookworm) and PHP 8.4 (Debian Trixie)
 - Configuration files are automatically backed up before modification
 - Use dry-run mode (`-t`) to test before actual installation
 - Check the log file for detailed installation information
