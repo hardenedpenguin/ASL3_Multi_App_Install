@@ -290,9 +290,14 @@ install_skywarnplus() {
     local debian_codename=$(get_debian_codename)
     if [ "$debian_codename" = "trixie" ]; then
         log INFO "Detected Debian Trixie - installing pydub via pip3"
+        # Ensure pip3 is installed on Trixie
+        if ! command_exists pip3; then
+            log INFO "Installing python3-pip for Trixie"
+            apt install -y python3-pip || error_exit "Failed to install python3-pip"
+        fi
         if ! python3 -c "import pydub" 2>/dev/null; then
             log INFO "Installing pydub via pip3"
-            pip3 install pydub || error_exit "Failed to install pydub via pip3"
+            pip3 install --break-system-packages pydub || error_exit "Failed to install pydub via pip3"
         else
             log INFO "pydub is already installed"
         fi
@@ -304,7 +309,12 @@ install_skywarnplus() {
                 log INFO "Installed python3-pydub via apt"
             else
                 log WARN "python3-pydub not available via apt, falling back to pip3"
-                pip3 install pydub || error_exit "Failed to install pydub via pip3"
+                # Ensure pip3 is installed before using it
+                if ! command_exists pip3; then
+                    log INFO "Installing python3-pip"
+                    apt install -y python3-pip || error_exit "Failed to install python3-pip"
+                fi
+                pip3 install --break-system-packages pydub || error_exit "Failed to install pydub via pip3"
             fi
         fi
     fi
