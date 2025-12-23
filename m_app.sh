@@ -112,6 +112,27 @@ get_debian_codename() {
     fi
 }
 
+# Function to ensure pip3 is installed
+ensure_pip3() {
+    if ! command_exists pip3; then
+        log INFO "Installing python3-pip"
+        apt install -y python3-pip || error_exit "Failed to install python3-pip"
+    fi
+}
+
+# Function to install Python package via pip if not already installed
+install_pip_package() {
+    local package=$1
+    local module_name=${2:-$package}  # Use provided module name or default to package name
+    
+    if ! python3 -c "import $module_name" 2>/dev/null; then
+        log INFO "Installing $package via pip3"
+        pip3 install --break-system-packages "$package" || error_exit "Failed to install $package via pip3"
+    else
+        log INFO "$module_name is already installed"
+    fi
+}
+
 # Function to safely download files
 safe_download() {
     local url="$1"
@@ -277,7 +298,7 @@ install_skywarnplus() {
         return 0
     fi
     
-    # Install dependencies
+    # Install system dependencies
     local deps=("unzip" "python3" "python3-pip" "ffmpeg" "python3-ruamel.yaml" "python3-requests" "python3-dateutil")
     for dep in "${deps[@]}"; do
         if ! package_installed "$dep"; then
@@ -286,21 +307,13 @@ install_skywarnplus() {
         fi
     done
     
-    # Install pydub - use pip3 on Trixie, apt on Bookworm
+    # Install Python packages - use pip3 on Trixie, try apt first on other versions
     local debian_codename=$(get_debian_codename)
     if [ "$debian_codename" = "trixie" ]; then
-        log INFO "Detected Debian Trixie - installing pydub via pip3"
-        # Ensure pip3 is installed on Trixie
-        if ! command_exists pip3; then
-            log INFO "Installing python3-pip for Trixie"
-            apt install -y python3-pip || error_exit "Failed to install python3-pip"
-        fi
-        if ! python3 -c "import pydub" 2>/dev/null; then
-            log INFO "Installing pydub via pip3"
-            pip3 install --break-system-packages pydub || error_exit "Failed to install pydub via pip3"
-        else
-            log INFO "pydub is already installed"
-        fi
+        log INFO "Detected Debian Trixie - installing Python packages via pip3"
+        ensure_pip3
+        install_pip_package "pydub" "pydub"
+        install_pip_package "audioop-lts" "audioop"
     else
         # Try apt install for Bookworm and other versions
         if ! package_installed "python3-pydub"; then
@@ -309,12 +322,8 @@ install_skywarnplus() {
                 log INFO "Installed python3-pydub via apt"
             else
                 log WARN "python3-pydub not available via apt, falling back to pip3"
-                # Ensure pip3 is installed before using it
-                if ! command_exists pip3; then
-                    log INFO "Installing python3-pip"
-                    apt install -y python3-pip || error_exit "Failed to install python3-pip"
-                fi
-                pip3 install --break-system-packages pydub || error_exit "Failed to install pydub via pip3"
+                ensure_pip3
+                install_pip_package "pydub" "pydub"
             fi
         fi
     fi
