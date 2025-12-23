@@ -36,7 +36,7 @@ cd
 Then we can download the script file with this command:
 
 ```bash
-wget https://raw.githubusercontent.com/KD5FMU/ASL3_Multi_App_Install_Debian-_13_TRIXIE/refs/heads/main/m_app.sh
+wget https://raw.githubusercontent.com/KD5FMU/ASL3_Multi_App_Install/refs/heads/main/m_app.sh
 ```
 
 Then once the download has finished we need to make the newly downloaded script file executable. We can do this with the following command:
