@@ -1,5 +1,5 @@
 ![MAPI Logo](https://github.com/KD5FMU/ASL3_Multi_App_Install/blob/main/MAIS.png)
-# >>>> Now Compatible with Bookworm and Trixie Installs <<<<
+# >> Now Compatible with Bookworm and Trixie Installs <<
 
 # AllStarLink Multiple Application Install Script
 This is an enhanced script file that will help install AllScan, DvSwitch Server, SkywarnPlus, and Supermon 7.4 Fresh Install and the Upgradable Version. I mostly utilize this script to install these Apps once I setup a new ASL3 Install.
