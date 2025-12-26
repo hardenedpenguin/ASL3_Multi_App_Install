@@ -1,5 +1,23 @@
+From: Jory A. Pratt <geekypenguin@gmail.com>
+Subject: [PATCH] Add Debian Trixie compatibility for pydub installation
+
+This patch adds automatic detection and handling for pydub installation
+on Debian Trixie systems where python3-pydub is not available due to
+Python 3.13 removing the audioop module.
+
+Changes:
+- Removed direct python3-pydub installation via apt
+- Added logic to detect if python3-pydub is available in system packages
+- Falls back to installing audioop-lts and pydub via pip when system
+  package is unavailable (required for Python 3.13 compatibility)
+
+This ensures SkywarnPlus works correctly on both Debian Bookworm (where
+python3-pydub is available) and Debian Trixie (where it must be
+installed via pip).
+
+---
 diff --git a/swp-install b/swp-install
-index acd6234..52fcdad 100644
+index acd6234..9e64c4b 100644
 --- a/swp-install
 +++ b/swp-install
 @@ -111,7 +111,18 @@ install_dependencies() {
@@ -16,8 +34,8 @@ index acd6234..52fcdad 100644
 +                echo "Installed python3-pydub from system packages"
 +            else
 +                echo "python3-pydub not available in system packages (likely Debian Trixie)"
-+                echo "Installing pydub via pip (latest version works with Python 3.13)"
-+                pip3 install --break-system-packages pydub
++                echo "Installing audioop-lts and pydub via pip (required for Python 3.13 compatibility)"
++                pip3 install --break-system-packages audioop-lts pydub
 +            fi
          fi
      elif [ "$OS" = "arch" ]; then
